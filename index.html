@@ -1,10 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Click Me Surprise</title>
+
+<style>
+body {
+  min-height: 100vh;
+  background: #ffe0f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  overflow: hidden;
+}
+
+.container {
+  background: #fff0f5;
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(255, 192, 203, 0.3);
+  text-align: center;
+  z-index: 2;
+}
+
+button {
+  background-color: #ff69b4;
+  color: #fff;
+  padding: 14px 38px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #ffb6e6;
+}
+
+button:hover {
+  background: #fc8fe4;
+}
+
+.message {
+  display: none;
+  margin-top: 18px;
+  font-size: 1.25rem;
+  background: linear-gradient(90deg, #ffb6e6, #ffc9de);
+  color: #c2185b;
+  border-radius: 16px;
+  padding: 24px;
+  font-style: italic;
+}
+
+.show {
+  display: block;
+}
+
+.rose {
+  font-size: 2em;
+}
+
+.heart {
+  position: fixed;
+  bottom: -10px;
+  font-size: 20px;
+  animation: floatUp 4s linear forwards;
+  opacity: 0.8;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <button id="revealBtn">Click me</button>
+
+  <div class="message" id="surpriseMsg">
+    <span class="rose">🌹</span>
+    <span id="typedText"></span>
+  </div>
+</div>
+
+<script>
+const btn = document.getElementById('revealBtn');
+const msg = document.getElementById('surpriseMsg');
+const typedText = document.getElementById('typedText');
+
 const text = "In case no one told you today… you make the world a little better just by being in it 🌸";
 let index = 0;
 
 function typeEffect() {
   if (index < text.length) {
-    document.getElementById("typedText").innerHTML += text.charAt(index);
+    typedText.innerHTML += text.charAt(index);
     index++;
-    setTimeout(typeEffect, 40); // speed (lower = faster)
+    setTimeout(typeEffect, 40);
   }
 }
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerText = "💗";
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 10 + 20) + "px";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 4000);
+}
+
+btn.addEventListener('click', function() {
+  msg.classList.add('show');
+  btn.disabled = true;
+  btn.style.opacity = 0.7;
+
+  typeEffect();
+  setInterval(createHeart, 300);
+});
+</script>
+
+</body>
+</html>
