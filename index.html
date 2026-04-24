@@ -1,0 +1,10 @@
+const text = "In case no one told you today… you make the world a little better just by being in it 🌸";
+let index = 0;
+
+function typeEffect() {
+  if (index < text.length) {
+    document.getElementById("typedText").innerHTML += text.charAt(index);
+    index++;
+    setTimeout(typeEffect, 40); // speed (lower = faster)
+  }
+}
